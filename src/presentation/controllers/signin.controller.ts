@@ -7,8 +7,8 @@ export class SigninController implements Controller {
 
   handle = async (req: HttpRequestModel): Promise<HttpResponseModel> => {
     try {
-      await this.signinUsecase.run(req.body)
-      return ok()
+      const result = await this.signinUsecase.run(req.body)
+      return ok(result)
     } catch (error) {
       return customError(error)
     }
