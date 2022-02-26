@@ -6,8 +6,13 @@ import { fuelStationMapper } from '../mappers/fuel-station.mapper'
 
 export class FindFuelStationByEmailRepositoryPg implements FindFuelStationByEmailRepository {
   run = async (email: string): Promise<FuelStationResponse | undefined> => {
-    const fuelStationEntity = getRepository(FuelStationEntity)
-    const fuelStationResponse = await fuelStationEntity.findOne({ email })
-    return fuelStationMapper(fuelStationResponse)
+    try {
+      const fuelStationEntity = getRepository(FuelStationEntity)
+      const fuelStationResponse = await fuelStationEntity.findOne({ email })
+      return fuelStationMapper(fuelStationResponse)
+    } catch (error) {
+      console.error('FindFuelStationByEmailRepositoryPg:::', error)
+      throw new Error('Error ao criar o Posto.')
+    }
   }
 }

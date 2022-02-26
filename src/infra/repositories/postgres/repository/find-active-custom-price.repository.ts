@@ -7,14 +7,19 @@ import { customPricesMapper } from '../mappers/custom-price.mapper'
 
 export class FindActiveCustomPriceRepositoryPg implements FindActiveCustomPriceRepository {
   run = async (fuelStationId: Number): Promise<CustomPriceResponse | undefined> => {
-    const currentDate = new Date()
-    const dateFormated = moment(currentDate).format('YYYY-MM-DD')
-    const customPriceEntity = getRepository(CustomPriceEntity)
-    const customPriceResponse = await customPriceEntity.findOne({
-      fuelStationId: fuelStationId,
-      isActive: 'SIM',
-      createDate: dateFormated
-    })
-    return customPricesMapper(customPriceResponse)
+    try {
+      const currentDate = new Date()
+      const dateFormated = moment(currentDate).format('YYYY-MM-DD')
+      const customPriceEntity = getRepository(CustomPriceEntity)
+      const customPriceResponse = await customPriceEntity.findOne({
+        fuelStationId: fuelStationId,
+        isActive: 'SIM',
+        createDate: dateFormated
+      })
+      return customPricesMapper(customPriceResponse)
+    } catch (error) {
+      console.error('FindActiveCustomPriceRepositoryPg:::', error)
+      throw new Error('Erro ao pesquisar um preço ativo')
+    }
   }
 }

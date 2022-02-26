@@ -5,7 +5,12 @@ import { FuelStationEntity } from '../entities/fuel-station'
 
 export class CreateFuelStationRepositoryPg implements CreateFuelStationRepository {
   run = async (fuelStation: FuelStation): Promise<void> => {
-    const fuelStationEntity = getRepository(FuelStationEntity)
-    await fuelStationEntity.save(fuelStation)
+    try {
+      const fuelStationEntity = getRepository(FuelStationEntity)
+      await fuelStationEntity.save(fuelStation)
+    } catch (error) {
+      console.error('CreateFuelStationRepositoryPg:::', error)
+      throw new Error('Erro ao criar o Posto')
+    }
   }
 }

@@ -5,7 +5,12 @@ import { PurchaseOrderEntity } from '../entities'
 
 export class CreatePurchaseOrderRepositoryPg implements CreatePurchaseOrderRepository {
   run = async (purchaseOrder: PurchaseOrderModel): Promise<void> => {
-    const supplierEntity = getRepository(PurchaseOrderEntity)
-    await supplierEntity.save(purchaseOrder)
+    try {
+      const supplierEntity = getRepository(PurchaseOrderEntity)
+      await supplierEntity.save(purchaseOrder)
+    } catch (error) {
+      console.error('CreatePurchaseOrderRepositoryPg:::', error)
+      throw new Error('Erro ao criar o pedido de compra')
+    }
   }
 }
