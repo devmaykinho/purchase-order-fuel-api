@@ -1,0 +1,6 @@
+export type FuelStationStatus = 'PEDING' | 'ACTIVE' | 'BLOCKED'
+export type IsActive = 'SIM' | 'NÃO'
+export type FuelType = 'GASOLINA' | 'ETANOL'
+export type PaymentType = 'ANTECIPADO' | 'AVISTA' | '7DIAS' | '10DIAS'
+export type DeliveryType = 'RETIRADA' | 'COLACADO'
+export type PurchaseOrderStatus = 'PENDENTE' | 'ENTREGUE' | 'CANCELADO'

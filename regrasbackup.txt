@@ -1,0 +1,40 @@
+ - Enquanto o cadastro estiver pendente de aprovação o usuário só poderá visualizar a tela inicial com as promoções.
+ - Fazer um pedido por fez.
+    - Preço retirada
+    - Preço Colocado
+    - Quantidade de litros
+    - Tipo combustivel
+      Nome Motorista
+      CNH do motorista
+      Nome Transportadora
+      Placa caminhão
+      CNPJ trasportadora
+  
+    - Para informar os dados da transportadora, ir para uma nova tela antes da confirmação.
+
+    - Os preços disponíves para o usuário selecionar, serão
+     Antecipado
+     Avista
+     7 dias
+     10 dias
+
+    - Essas opções serão tanto para colocado quanto para retirada.
+    - Obter o preço do cadastro de fornecedor ativo
+    - Só pode ter um fornecedor ativo
+    - Ao gravar o pedido marcar qual o fornecedor do momento.
+    - Os preços que serão exibidos para o usuário será o preço de venda que também ficará no cadastreo do fornecedor
+    - Deverá haver uma opção para o administrador cadastrar um desconto especifico para o cliente.
+      - Ao cadastrar o desconto, deve-se informa para qual preço (Antecipado, Avista etc)
+      - Ao fazer o pedido verficar se o usuário tem um preço especifico cadastrado, se sim aplicar o desconto
+      - O desconto será validado apenas para o dia e apenas para um pedido.
+    - Fornecer um link que será direcionado para o whatsap no qual o usuário enviará o comprovante de pagamento quando o pedido for antecipado.
+
+
+ Relatórios
+  - No momento de gerar o relatório deve se aplicar uma comissão de 0,003 * quantidade de litros em cima dos pedidos.
+    - Essa comissão será configuravel pelo administrador
+
+ CORES DO APP
+  - Azul, vermelho e branco
+
+  - Cor primaria - Fazer um teste com azul bem clarinho

@@ -1,0 +1,13 @@
+version: "3"
+services:
+  api:
+    container_name: fuel-station-api-container
+    image: node:14
+    working_dir: /usr/src/clean-node-api
+    restart: always
+    command: bash -c "npm install --only=prod && npm start"
+    volumes:
+      - ./dist/:/usr/src/clean-node-api/dist/
+      - ./package.json:/usr/src/clean-node-api/package.json
+    ports:
+      - "8080:8080"
