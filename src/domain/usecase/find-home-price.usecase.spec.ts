@@ -62,8 +62,7 @@ describe('FindHomePriceUsecase - Unit test', () => {
     const supplierPriceFilter: FindSupplierPricesFilter = {
       fuelType: 'ETANOL',
       paymentType: 'ANTECIPADO',
-      deliveryType: 'RETIRADA',
-      supplierId: fuelStationId
+      deliveryType: 'RETIRADA'
     }
 
     expect(findSupplierPriceByFilter.run).toHaveBeenCalledWith(supplierPriceFilter)

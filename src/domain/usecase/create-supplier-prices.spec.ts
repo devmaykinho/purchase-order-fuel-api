@@ -1,5 +1,5 @@
 import { mock, MockProxy } from 'jest-mock-extended'
-import { Validation, ValidationDuplicateRecord, CreateSupplierPrices, CreateSupplierPricesRepository } from '../interface'
+import { Validation, CreateSupplierPrices, CreateSupplierPricesRepository } from '../interface'
 import { CreateSupplierPricesUseCase } from './create-supplier-prices.usecase'
 import { newSupplierPrices } from '../../utils/fixtures'
 
@@ -7,13 +7,11 @@ const supplierPrices = newSupplierPrices()
 
 describe('CreateSupplierPrices - Unit test', () => {
   let requiredFieldsValidation: MockProxy<Validation>
-  let validationDuplicateRecord: MockProxy<ValidationDuplicateRecord>
   let createSupplierPricesRepository: MockProxy<CreateSupplierPricesRepository>
   let createSupplierPricesUseCase: CreateSupplierPrices
 
   beforeAll(() => {
     requiredFieldsValidation = mock()
-    validationDuplicateRecord = mock()
     createSupplierPricesRepository = mock()
     createSupplierPricesUseCase = new CreateSupplierPricesUseCase(
       requiredFieldsValidation,
@@ -23,7 +21,6 @@ describe('CreateSupplierPrices - Unit test', () => {
   it('Shoul call all validations with correct values', async () => {
     await createSupplierPricesUseCase.run(supplierPrices)
     expect(requiredFieldsValidation.validate).toBeCalledWith(supplierPrices)
-    expect(validationDuplicateRecord.validate).toBeCalledWith(supplierPrices)
     expect(createSupplierPricesRepository.run).toBeCalledWith(supplierPrices)
   })
 

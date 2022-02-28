@@ -1,3 +1,4 @@
+import { IsActive } from '../interface/types'
 import { DeliveryType, FuelType, PaymentType } from './supplier-prices'
 
 export interface CustomPriceModel {
@@ -5,7 +6,7 @@ export interface CustomPriceModel {
   paymentType: PaymentType
   deliveryType: DeliveryType
   price: Number
-  isActive: 'SIM' | 'NÃO'
+  isActive?: IsActive
   fuelStationId: Number
   createDate: string
 }
