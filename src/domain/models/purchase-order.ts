@@ -7,9 +7,9 @@ export interface PurchaseOrderModel {
   deliveryType: DeliveryType
   totalPrice: Number
   qtdLiters: Number
-  status: PurchaseOrderStatus
+  status?: PurchaseOrderStatus
   fuelStationId: Number
   deliveryDate: string
-  createDate: string
+  createDate?: string
   shippingCompany?: ShippingCompanyModel
 }

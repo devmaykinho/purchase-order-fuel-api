@@ -1,5 +1,5 @@
 import { MockProxy, mock } from 'jest-mock-extended'
-import { FindFuelStationByEmailRepository, PurcharseOrderValidations, Validation } from '../interface'
+import { FindFuelStationByEmailRepository, GetConfigRepository, PurcharseOrderValidations, Validation } from '../interface'
 import { PurcharseOrderValidation } from './purchase-order.validations'
 import { newPurchaseOrder, newFuelStationResponse } from '../../utils/fixtures'
 import { CustomError, MissingParamError } from '../../utils/error'
@@ -7,31 +7,31 @@ import { DeliveryType, FuelType, PaymentType } from '../interface/types'
 import moment from 'moment'
 import { ShippingCompanyModel } from '../models'
 
-const fuelStationResponse = newFuelStationResponse()
+let requiredFieldsValidation: MockProxy<Validation>
+let shippingCompanyValidation: MockProxy<Validation>
+let findFuelStationRepository: MockProxy<FindFuelStationByEmailRepository>
+let getConfigRepository: MockProxy<GetConfigRepository>
+let purcharseOrderValidation: PurcharseOrderValidations
 
 describe('PurchaseOrderValidation - Unit test', () => {
-  let requiredFieldsValidation: MockProxy<Validation>
-  let shippingCompanyValidation: MockProxy<Validation>
-  let findFuelStationRepository: MockProxy<FindFuelStationByEmailRepository>
-  let purcharseOrderValidation: PurcharseOrderValidations
-
   beforeAll(() => {
+    jest.clearAllMocks()
     requiredFieldsValidation = mock()
     shippingCompanyValidation = mock()
     findFuelStationRepository = mock()
+    getConfigRepository = mock()
 
+    const fuelStationResponse = newFuelStationResponse({ status: 'ACTIVE' })
+    const timeLimit = new Date().getHours() + 1
+    getConfigRepository.run.mockImplementationOnce(async () => Promise.resolve({ timeLimitPurchase: `${timeLimit}:00` }))
     findFuelStationRepository.run.mockImplementationOnce(async () => Promise.resolve(fuelStationResponse))
 
     purcharseOrderValidation = new PurcharseOrderValidation(
       requiredFieldsValidation,
       shippingCompanyValidation,
-      findFuelStationRepository
+      findFuelStationRepository,
+      getConfigRepository
     )
-  })
-
-  it('Should return CustomError if fuel station is not approved', async () => {
-    const purchaseOrder = newPurchaseOrder()
-    await expect(purcharseOrderValidation.validate(purchaseOrder)).rejects.toThrow(new CustomError('Cadastro pendente de aprovação.'))
   })
 
   it('Should return CustomError if fuel type is invalid', async () => {
@@ -68,5 +68,58 @@ describe('PurchaseOrderValidation - Unit test', () => {
     const shippingCompany = {} as ShippingCompanyModel
     const purchaseOrder = newPurchaseOrder({ deliveryType: 'RETIRADA', shippingCompany })
     await expect(purcharseOrderValidation.validate(purchaseOrder)).rejects.toThrow(new MissingParamError('shippingCompany'))
+  })
+})
+
+describe('PurchaseOrderValidation Fuel Station peding - Unit test', () => {
+  beforeAll(() => {
+    jest.clearAllMocks()
+    requiredFieldsValidation = mock()
+    shippingCompanyValidation = mock()
+    findFuelStationRepository = mock()
+    getConfigRepository = mock()
+
+    const fuelStationResponse = newFuelStationResponse()
+    const timeLimit = new Date().getHours() + 1
+    getConfigRepository.run.mockImplementationOnce(async () => Promise.resolve({ timeLimitPurchase: `${timeLimit}:00` }))
+    findFuelStationRepository.run.mockImplementationOnce(async () => Promise.resolve(fuelStationResponse))
+
+    purcharseOrderValidation = new PurcharseOrderValidation(
+      requiredFieldsValidation,
+      shippingCompanyValidation,
+      findFuelStationRepository,
+      getConfigRepository
+    )
+  })
+
+  it('Should return CustomError if fuel station is not approved', async () => {
+    const purchaseOrder = newPurchaseOrder()
+    await expect(purcharseOrderValidation.validate(purchaseOrder)).rejects.toThrow(new CustomError('Cadastro pendente de aprovação.'))
+  })
+})
+
+describe('PurchaseOrderValidation Invalid Time Limit - Unit test', () => {
+  beforeAll(() => {
+    jest.clearAllMocks()
+    requiredFieldsValidation = mock()
+    shippingCompanyValidation = mock()
+    findFuelStationRepository = mock()
+    getConfigRepository = mock()
+
+    const fuelStationResponse = newFuelStationResponse({ status: 'ACTIVE' })
+    const timeLimit = new Date().getHours() - 1
+    getConfigRepository.run.mockImplementationOnce(async () => Promise.resolve({ timeLimitPurchase: `${timeLimit}:00` }))
+    findFuelStationRepository.run.mockImplementationOnce(async () => Promise.resolve(fuelStationResponse))
+
+    purcharseOrderValidation = new PurcharseOrderValidation(
+      requiredFieldsValidation,
+      shippingCompanyValidation,
+      findFuelStationRepository,
+      getConfigRepository
+    )
+  })
+  it('Should return CustomError if time limit is invalid', async () => {
+    const purchaseOrder = newPurchaseOrder()
+    await expect(purcharseOrderValidation.validate(purchaseOrder)).rejects.toThrow(new CustomError('Horario não permitido para realização do pedido.'))
   })
 })

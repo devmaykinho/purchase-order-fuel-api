@@ -1,33 +1,46 @@
 import moment from 'moment'
 import { CustomError, MissingParamError } from '../../utils/error'
 import { DeliveryType, FuelType, PaymentType } from '../interface/types'
-import { FindFuelStationByEmailRepository, Validation } from '../interface'
+import { FindFuelStationByEmailRepository, GetConfigRepository, Validation } from '../interface'
 import { PurchaseOrderModel, ShippingCompanyModel } from '../models'
 
 export class PurcharseOrderValidation implements Validation {
   constructor (
     private readonly requiredFieldsValidation: Validation,
     private readonly shippingCompanyValidation: Validation,
-    private readonly findFuelStationRepository: FindFuelStationByEmailRepository
+    private readonly findFuelStationRepository: FindFuelStationByEmailRepository,
+    private readonly getConfigRepository: GetConfigRepository
   ) {}
 
   validate = async (purcharseOrder: PurchaseOrderModel): Promise<void> => {
     this.requiredFieldsValidation.validate(purcharseOrder)
     this.validateShippingCompany(purcharseOrder.shippingCompany)
-    this.validateTimeLimit()
     this.validateFuelType(purcharseOrder.fuelType)
     this.validatePaymentType(purcharseOrder.paymentType)
     this.validateDeliveryType(purcharseOrder.deliveryType)
     this.validateDeliveryDate(purcharseOrder.deliveryDate)
     this.validateQtdLiters(purcharseOrder.qtdLiters)
 
+    await this.validateTimeLimit()
     await this.validateFuelStationStatus(purcharseOrder.fuelStationId.toString())
   }
 
-  validateTimeLimit = (): void => {
-    const curretDate = Number(new Date().getHours())
-    if (curretDate > 16) {
-      throw new CustomError('Horario não permitido para realização do pedido')
+  validateTimeLimit = async (): Promise<void> => {
+    const config = await this.getConfigRepository.run()
+    const curretDate = new Date()
+    const currentHour = Number(curretDate.getHours())
+    const currentMinute = Number(curretDate.getMinutes())
+
+    if (!config?.timeLimitPurchase) {
+      throw new Error('Não foi possível localizar as configurações do sistema.')
+    }
+
+    const timeConfig = config?.timeLimitPurchase.split(':') ?? 0
+
+    if (currentHour > Number(timeConfig[0]) ||
+        (currentHour === Number(timeConfig[0]) && currentMinute > Number(timeConfig[1]))
+    ) {
+      throw new CustomError('Horario não permitido para realização do pedido.')
     }
   }
 

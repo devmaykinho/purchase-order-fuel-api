@@ -13,7 +13,6 @@ export const makeCreatePurchaseOrderValidationFactory = (): ValidationComposite 
     'deliveryType',
     'totalPrice',
     'qtdLiters',
-    'status',
     'fuelStationId',
     'deliveryDate'
   ]
