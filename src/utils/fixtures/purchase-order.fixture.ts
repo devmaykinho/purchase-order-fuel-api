@@ -8,10 +8,10 @@ interface PurchaseOrderFixtureProps {
   deliveryType?: DeliveryType
   totalPrice?: Number
   qtdLiters?: Number
-  status: PurchaseOrderStatus
-  fuelStationId: Number
-  deliveryDate: string
-  createDate: string
+  status?: PurchaseOrderStatus
+  fuelStationId?: Number
+  deliveryDate?: string
+  createDate?: string
   shippingCompany?: ShippingCompanyModel
 }
 

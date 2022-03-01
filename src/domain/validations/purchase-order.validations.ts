@@ -19,6 +19,7 @@ export class PurcharseOrderValidation implements Validation {
     this.validatePaymentType(purcharseOrder.paymentType)
     this.validateDeliveryType(purcharseOrder.deliveryType)
     this.validateDeliveryDate(purcharseOrder.deliveryDate)
+    this.validateQtdLiters(purcharseOrder.qtdLiters)
 
     await this.validateFuelStationStatus(purcharseOrder.fuelStationId.toString())
   }
@@ -33,35 +34,35 @@ export class PurcharseOrderValidation implements Validation {
   validateFuelType = (type: FuelType): void => {
     const types: FuelType[] = ['ETANOL', 'GASOLINA']
     if (!types.includes(type)) {
-      throw new CustomError('Tipo de combustivel não permitido')
+      throw new CustomError('Tipo de combustivel não permitido.')
     }
   }
 
   validatePaymentType = (type: PaymentType): void => {
     const types: PaymentType[] = ['ANTECIPADO', 'AVISTA', '7DIAS', '10DIAS']
     if (!types.includes(type)) {
-      throw new CustomError('Tipo de pagamento não permitido')
+      throw new CustomError('Tipo de pagamento não permitido.')
     }
   }
 
   validateDeliveryType = (type: DeliveryType): void => {
     const types: DeliveryType[] = ['COLACADO', 'RETIRADA']
     if (!types.includes(type)) {
-      throw new CustomError('Tipo de entrega não permitido')
+      throw new CustomError('Tipo de entrega não permitido.')
     }
   }
 
   validateFuelStationStatus = async (fuelStationId: string): Promise<void> => {
     const fuelStation = await this.findFuelStationRepository.run(fuelStationId)
     if (fuelStation?.status !== 'ACTIVE') {
-      throw new CustomError('Usuário pendente de aprovação')
+      throw new CustomError('Cadastro pendente de aprovação.')
     }
   }
 
   validateDeliveryDate = (deliveryDate: string): void => {
     const curretDate = moment(new Date()).format('DD/MM/YYYY')
     if (curretDate <= deliveryDate) {
-      throw new CustomError('Não é possível fazer pedido para o mesmo dia')
+      throw new CustomError('Não é possível fazer pedido para o mesmo dia.')
     }
   }
 
@@ -69,6 +70,23 @@ export class PurcharseOrderValidation implements Validation {
     if (!shippingCompany) {
       throw new MissingParamError('shippingCompany')
     }
+
+    let isEmpty = true
+
+    Object.keys(shippingCompany).forEach((key) => {
+      isEmpty = false
+    })
+
+    if (isEmpty) {
+      throw new MissingParamError('shippingCompany')
+    }
+
     this.shippingCompanyValidation.validate(shippingCompany)
+  }
+
+  validateQtdLiters = (qtdLiters: Number): void => {
+    if (qtdLiters < 1) {
+      throw new CustomError('Quantidade de litros dever ser maior que zero.')
+    }
   }
 }

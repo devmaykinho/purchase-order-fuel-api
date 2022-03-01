@@ -88,6 +88,8 @@
       - Usuario deve selecionar a data de entrega. A data de entrega não pode ser para o mesmo dia.
     * Quantidade de litros
 
+  - Quantidade de litros deve ser maior que 0
+
   - A tela deve ser com uma seleção padrão
     Etanol
     Retirada
@@ -96,7 +98,7 @@
 
   - Deve mostrar o total baseado nas informações selecionadas  
   - O total deve ser atualizado após a mudança de cada informação
-  - Quando o usuário selecionar o "colocada" informar que terá um acrescimo de frete. Mas esse valor de frete não será registridado no pedido.  
+  - Quando o usuário selecionar "colocada" informar que terá um acrescimo de frete. Mas esse valor de frete não será registridado no pedido.  
 
   - Só habilitar o botão de NEXT após selecionar todas as opções
   - Após clicar em next, so o tipo combustivel for retirada, direcionar para a tela de informações da transportadora, caso contrario ir direto para a tela de confirmação do pedido
