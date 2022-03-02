@@ -14,15 +14,15 @@ export class PurcharseOrderValidation implements Validation {
 
   validate = async (purcharseOrder: PurchaseOrderModel): Promise<void> => {
     this.requiredFieldsValidation.validate(purcharseOrder)
-    this.validateShippingCompany(purcharseOrder.shippingCompany)
-    this.validateFuelType(purcharseOrder.fuelType)
-    this.validatePaymentType(purcharseOrder.paymentType)
-    this.validateDeliveryType(purcharseOrder.deliveryType)
-    this.validateDeliveryDate(purcharseOrder.deliveryDate)
-    this.validateQtdLiters(purcharseOrder.qtdLiters)
+    // this.validateShippingCompany(purcharseOrder.shippingCompany)
+    // this.validateFuelType(purcharseOrder.fuelType)
+    // this.validatePaymentType(purcharseOrder.paymentType)
+    // this.validateDeliveryType(purcharseOrder.deliveryType)
+    // this.validateDeliveryDate(purcharseOrder.deliveryDate)
+    // this.validateQtdLiters(purcharseOrder.qtdLiters)
 
-    await this.validateTimeLimit()
-    await this.validateFuelStationStatus(purcharseOrder.fuelStationId.toString())
+    // await this.validateTimeLimit()
+    // await this.validateFuelStationStatus(purcharseOrder.fuelStationId.toString())
   }
 
   validateTimeLimit = async (): Promise<void> => {

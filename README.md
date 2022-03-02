@@ -104,6 +104,7 @@
   - Após clicar em next, so o tipo combustivel for retirada, direcionar para a tela de informações da transportadora, caso contrario ir direto para a tela de confirmação do pedido
   - Não permitir pedido após as 16:00
     * Deixar configurado
+  - Quando criado, o pedido deve ser vinculado ao fornecedor ativo. Isso para que seja possível gerar o relatório
   - Para obter os valores deverá fazer a chamada para a api
 
   TELA DETALHES DO PEDIDO (CONFIRMAÇÃO)

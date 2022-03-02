@@ -4,7 +4,7 @@ import {
   ValidationComposite
 } from '../../../domain/validations'
 
-import { FindFuelStationByEmailRepositoryPg } from '../../../infra/repositories/postgres/repository'
+import { FindFuelStationByEmailRepositoryPg, GetConfigRepositoryPg } from '../../../infra/repositories/postgres/repository'
 
 export const makeCreatePurchaseOrderValidationFactory = (): ValidationComposite => {
   const requiredFields = [
@@ -28,7 +28,8 @@ export const makeCreatePurchaseOrderValidationFactory = (): ValidationComposite 
   const purcharseOrderValidation = new PurcharseOrderValidation(
     new RequiredFieldValidation(requiredFields),
     new RequiredFieldValidation(shippingCompanyRequiredFields),
-    new FindFuelStationByEmailRepositoryPg()
+    new FindFuelStationByEmailRepositoryPg(),
+    new GetConfigRepositoryPg()
   )
 
   const validations = [

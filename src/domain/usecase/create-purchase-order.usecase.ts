@@ -10,6 +10,6 @@ export class CreatePurchaseOrderUseCase implements CreatePurchaseOrder {
 
   run = async (purchaseOrder: PurchaseOrderModel): Promise<void> => {
     await this.purchaseOrderValidation.validate(purchaseOrder)
-    await this.createPurchaseOrderRepository.run(purchaseOrder)
+    await this.createPurchaseOrderRepository.run({ ...purchaseOrder, status: 'PENDENTE' })
   }
 }
