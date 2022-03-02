@@ -1,12 +1,12 @@
 export interface PurchaseOrderResponse {
-  orderNumber: string
+  id: number
   fuelType: string
   paymentType: string
   deliveryType: string
   totalPrice: Number
-  qtdLiters: Number
-  deliveryDate: Date
-  createDate: Date
   status: String
+  qtdLiters: Number
+  deliveryDate: string
+  createDate: string
   fuelStationId: Number
 }
