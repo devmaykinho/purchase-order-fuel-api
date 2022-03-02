@@ -1,12 +1,12 @@
+import { PurcharseOrderValidations } from '../../../domain/interface'
 import {
   RequiredFieldValidation,
-  PurcharseOrderValidation,
-  ValidationComposite
+  PurcharseOrderValidation
 } from '../../../domain/validations'
 
-import { FindFuelStationByEmailRepositoryPg, GetConfigRepositoryPg } from '../../../infra/repositories/postgres/repository'
+import { FindFuelStationByIdRepositoryPg, GetConfigRepositoryPg } from '../../../infra/repositories/postgres/repository'
 
-export const makeCreatePurchaseOrderValidationFactory = (): ValidationComposite => {
+export const makeCreatePurchaseOrderValidationFactory = (): PurcharseOrderValidations => {
   const requiredFields = [
     'fuelType',
     'paymentType',
@@ -25,15 +25,10 @@ export const makeCreatePurchaseOrderValidationFactory = (): ValidationComposite 
     'cnh'
   ]
 
-  const purcharseOrderValidation = new PurcharseOrderValidation(
+  return new PurcharseOrderValidation(
     new RequiredFieldValidation(requiredFields),
     new RequiredFieldValidation(shippingCompanyRequiredFields),
-    new FindFuelStationByEmailRepositoryPg(),
+    new FindFuelStationByIdRepositoryPg(),
     new GetConfigRepositoryPg()
   )
-
-  const validations = [
-    purcharseOrderValidation
-  ]
-  return new ValidationComposite(validations)
 }

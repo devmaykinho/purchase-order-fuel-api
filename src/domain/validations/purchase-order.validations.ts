@@ -1,28 +1,28 @@
 import moment from 'moment'
 import { CustomError, MissingParamError } from '../../utils/error'
 import { DeliveryType, FuelType, PaymentType } from '../interface/types'
-import { FindFuelStationByEmailRepository, GetConfigRepository, Validation } from '../interface'
+import { FindFuelStationByIdRepository, GetConfigRepository, Validation } from '../interface'
 import { PurchaseOrderModel, ShippingCompanyModel } from '../models'
 
 export class PurcharseOrderValidation implements Validation {
   constructor (
     private readonly requiredFieldsValidation: Validation,
     private readonly shippingCompanyValidation: Validation,
-    private readonly findFuelStationRepository: FindFuelStationByEmailRepository,
+    private readonly findFuelStationRepository: FindFuelStationByIdRepository,
     private readonly getConfigRepository: GetConfigRepository
   ) {}
 
   validate = async (purcharseOrder: PurchaseOrderModel): Promise<void> => {
     this.requiredFieldsValidation.validate(purcharseOrder)
-    // this.validateShippingCompany(purcharseOrder.shippingCompany)
-    // this.validateFuelType(purcharseOrder.fuelType)
-    // this.validatePaymentType(purcharseOrder.paymentType)
-    // this.validateDeliveryType(purcharseOrder.deliveryType)
-    // this.validateDeliveryDate(purcharseOrder.deliveryDate)
-    // this.validateQtdLiters(purcharseOrder.qtdLiters)
+    this.validateShippingCompany(purcharseOrder.shippingCompany)
+    this.validateFuelType(purcharseOrder.fuelType)
+    this.validatePaymentType(purcharseOrder.paymentType)
+    this.validateDeliveryType(purcharseOrder.deliveryType)
+    this.validateDeliveryDate(purcharseOrder.deliveryDate)
+    this.validateQtdLiters(purcharseOrder.qtdLiters)
 
-    // await this.validateTimeLimit()
-    // await this.validateFuelStationStatus(purcharseOrder.fuelStationId.toString())
+    await this.validateTimeLimit()
+    await this.validateFuelStationStatus(Number(purcharseOrder.fuelStationId))
   }
 
   validateTimeLimit = async (): Promise<void> => {
@@ -65,7 +65,7 @@ export class PurcharseOrderValidation implements Validation {
     }
   }
 
-  validateFuelStationStatus = async (fuelStationId: string): Promise<void> => {
+  validateFuelStationStatus = async (fuelStationId: number): Promise<void> => {
     const fuelStation = await this.findFuelStationRepository.run(fuelStationId)
     if (fuelStation?.status !== 'ACTIVE') {
       throw new CustomError('Cadastro pendente de aprovação.')
@@ -74,8 +74,8 @@ export class PurcharseOrderValidation implements Validation {
 
   validateDeliveryDate = (deliveryDate: string): void => {
     const curretDate = moment(new Date()).format('DD/MM/YYYY')
-    if (curretDate <= deliveryDate) {
-      throw new CustomError('Não é possível fazer pedido para o mesmo dia.')
+    if (curretDate >= deliveryDate) {
+      throw new CustomError('Não é possível fazer pedido para uma data anterior ou igual a atual.')
     }
   }
 

@@ -1,10 +1,10 @@
-import { CreatePurchaseOrder, Validation } from '../interface'
+import { CreatePurchaseOrder, PurcharseOrderValidations } from '../interface'
 import { CreatePurchaseOrderRepository } from '../interface/repository/create-purchase-order'
 import { PurchaseOrderModel } from '../models'
 
 export class CreatePurchaseOrderUseCase implements CreatePurchaseOrder {
   constructor (
-    private readonly purchaseOrderValidation: Validation,
+    private readonly purchaseOrderValidation: PurcharseOrderValidations,
     private readonly createPurchaseOrderRepository: CreatePurchaseOrderRepository
   ) {}
 
