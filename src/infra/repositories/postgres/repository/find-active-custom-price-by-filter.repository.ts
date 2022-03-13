@@ -1,19 +1,22 @@
 import moment from 'moment'
 import { getRepository } from 'typeorm'
-import { FindActiveCustomPriceRepository } from '../../../../domain/interface'
+import { FindActiveCustomPriceByfilterRepository, filter } from '../../../../domain/interface/repository'
 import { CustomPriceResponse } from '../../../../domain/response'
 import { CustomPriceEntity } from '../entities'
 
-export class FindActiveCustomPriceRepositoryPg implements FindActiveCustomPriceRepository {
-  run = async (fuelStationId: Number): Promise<CustomPriceResponse[] | undefined> => {
+export class FindActiveCustomPriceByFilterRepositoryPg implements FindActiveCustomPriceByfilterRepository {
+  run = async (filter: filter): Promise<CustomPriceResponse | undefined> => {
     try {
       const currentDate = new Date()
       const dateFormated = moment(currentDate).format('YYYY-MM-DD')
       const customPriceEntity = getRepository(CustomPriceEntity)
-      return await customPriceEntity.find({
-        fuelStationId: fuelStationId,
-        isActive: 'SIM',
-        createDate: dateFormated
+      return await customPriceEntity.findOne({
+        where: {
+          fuelStationId: filter.fuelStationId,
+          fuelType: filter.fuelType,
+          isActive: 'SIM',
+          createDate: dateFormated
+        }
       })
     } catch (error) {
       console.error('FindActiveCustomPriceRepositoryPg:::', error)

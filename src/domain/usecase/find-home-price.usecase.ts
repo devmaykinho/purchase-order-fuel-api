@@ -1,5 +1,6 @@
-import { FindActiveCustomPriceRepository, FindSupplierPricesByFilterRepository, FindSupplierPricesFilter, Validation } from '../interface'
+import { FindActiveCustomPriceRepository, FindSupplierPricesByFilterRepository, Validation } from '../interface'
 import { FindHomePrice } from '../interface/usecase/find-home-price'
+import { FuelType } from '../models'
 import { HomePriceResponse } from '../response'
 
 export class FindHomePriceUseCase implements FindHomePrice {
@@ -9,37 +10,50 @@ export class FindHomePriceUseCase implements FindHomePrice {
     private readonly findSupplierPriceByFilter: FindSupplierPricesByFilterRepository
   ) {}
 
-  run = async (fuelStationId: Number): Promise<HomePriceResponse | undefined> => {
+  run = async (fuelStationId: Number): Promise<HomePriceResponse[] | undefined> => {
     this.requeridFieldValidation.validate(fuelStationId)
-
+    const homePrice: HomePriceResponse[] = []
     const customPrice = await this.findActiveCustomPriceRepository.run(fuelStationId)
+    const pricesType: string[] = []
 
     if (customPrice) {
-      const homePrice: HomePriceResponse = {
-        fuelType: customPrice.fuelType,
-        paymentType: customPrice.paymentType,
-        deliveryType: customPrice.deliveryType,
-        price: customPrice.price
-      }
-      return homePrice
+      customPrice.forEach((price) => {
+        pricesType.push(price.fuelType)
+        homePrice.push(price)
+      })
     }
 
-    const supplierPriceFilter: FindSupplierPricesFilter = {
-      fuelType: 'ETANOL',
+    if (!pricesType.includes('ETANOL')) {
+      const supplierPrice = await this.getSupllierPriceByFuelType('ETANOL')
+      if (supplierPrice) {
+        homePrice.push(supplierPrice)
+      }
+    }
+
+    if (!pricesType.includes('GASOLINA')) {
+      const supplierPrice = await this.getSupllierPriceByFuelType('GASOLINA')
+      if (supplierPrice) {
+        homePrice.push(supplierPrice)
+      }
+    }
+
+    return homePrice
+  }
+
+  getSupllierPriceByFuelType = async (fuelType: FuelType): Promise<HomePriceResponse | undefined> => {
+    const supplierPrice = await this.findSupplierPriceByFilter.run({
+      fuelType: fuelType,
       paymentType: 'ANTECIPADO',
       deliveryType: 'RETIRADA'
-    }
-
-    const supplierPrice = await this.findSupplierPriceByFilter.run(supplierPriceFilter)
+    })
 
     if (supplierPrice) {
-      const homePrice: HomePriceResponse = {
-        fuelType: supplierPrice.fuelType,
-        paymentType: supplierPrice.paymentType,
+      return {
         deliveryType: supplierPrice.deliveryType,
+        fuelType: supplierPrice.fuelType,
+        paymentType: supplierPrice.deliveryType,
         price: supplierPrice.salesPrice
       }
-      return homePrice
     }
   }
 }

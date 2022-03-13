@@ -1,4 +1,4 @@
-import { FindActiveCustomPriceRepository, FindSupplierPricesByFilterRepository, FindSupplierPricesFilter, Validation } from '../interface'
+import { FindActiveCustomPriceByfilterRepository, FindSupplierPricesByFilterRepository, FindSupplierPricesFilter, Validation } from '../interface'
 import { FindOrderPriceByFilter } from '../interface/usecase/find-order-price-by-filter'
 import { OrderPriceFilterModel } from '../models'
 import { OrderPriceFilterResponse } from '../response'
@@ -6,14 +6,14 @@ import { OrderPriceFilterResponse } from '../response'
 export class FindOrderPriceByFilterUseCase implements FindOrderPriceByFilter {
   constructor (
     private readonly requeridFieldValidation: Validation,
-    private readonly findActiveCustomPriceRepository: FindActiveCustomPriceRepository,
+    private readonly findActiveCustomPriceRepository: FindActiveCustomPriceByfilterRepository,
     private readonly findSupplierPriceByFilter: FindSupplierPricesByFilterRepository
   ) {}
 
   run = async (filter: OrderPriceFilterModel): Promise<OrderPriceFilterResponse | undefined> => {
     this.requeridFieldValidation.validate(filter)
-
-    const customPrice = await this.findActiveCustomPriceRepository.run(filter.fuelStationId)
+    const { fuelStationId, fuelType } = filter
+    const customPrice = await this.findActiveCustomPriceRepository.run({ fuelStationId, fuelType })
 
     if (customPrice) {
       const orderPrice: OrderPriceFilterResponse = {

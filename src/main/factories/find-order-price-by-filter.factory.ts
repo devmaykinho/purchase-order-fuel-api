@@ -1,11 +1,11 @@
 import { FindOrderPriceByFilterUseCase } from '../../domain/usecase/find-order-price-by-filter.usecase'
-import { FindActiveCustomPriceRepositoryPg, FindSupplierPricesByFilterRepositoryPg } from '../../infra/repositories/postgres/repository'
+import { FindActiveCustomPriceByFilterRepositoryPg, FindSupplierPricesByFilterRepositoryPg } from '../../infra/repositories/postgres/repository'
 import { FindOrderPriceByFilterController } from '../../presentation/controllers'
 import { makeFindOrderPriceByFilterValidationFactory } from './validations/find-order-price-by-filter-validation.factory'
 import { Controller } from '../../presentation/interfaces/controller'
 
 export const makeFindOrderPriceByFilterController = (): Controller => {
-  const findActiveCustomPriceRepository = new FindActiveCustomPriceRepositoryPg()
+  const findActiveCustomPriceRepository = new FindActiveCustomPriceByFilterRepositoryPg()
   const findSupplierPricesByFilterRepository = new FindSupplierPricesByFilterRepositoryPg()
   const findOrderPriceByFilterUseCase = new FindOrderPriceByFilterUseCase(
     makeFindOrderPriceByFilterValidationFactory(),
