@@ -1,15 +1,15 @@
 import { MockProxy, mock } from 'jest-mock-extended'
-import { FindFuelStationByEmailRepository, GetConfigRepository, PurcharseOrderValidations, Validation } from '../interface'
+import { FindFuelStationByIdRepository, GetConfigRepository, PurcharseOrderValidations, Validation } from '../interface'
 import { PurcharseOrderValidation } from './purchase-order.validations'
 import { newPurchaseOrder, newFuelStationResponse } from '../../utils/fixtures'
 import { CustomError, MissingParamError } from '../../utils/error'
+import { addDayOnDate, formatDate } from '../../utils/dates'
 import { DeliveryType, FuelType, PaymentType } from '../interface/types'
-import moment from 'moment'
 import { ShippingCompanyModel } from '../models'
 
 let requiredFieldsValidation: MockProxy<Validation>
 let shippingCompanyValidation: MockProxy<Validation>
-let findFuelStationRepository: MockProxy<FindFuelStationByEmailRepository>
+let findFuelStationRepository: MockProxy<FindFuelStationByIdRepository>
 let getConfigRepository: MockProxy<GetConfigRepository>
 let purcharseOrderValidation: PurcharseOrderValidations
 
@@ -53,13 +53,15 @@ describe('PurchaseOrderValidation - Unit test', () => {
   })
 
   it('Should return CustomError if delivery date is invalid', async () => {
-    const curretDate = moment(new Date()).format('DD/MM/YYYY')
+    const curretDate = formatDate(new Date())
     const purchaseOrder = newPurchaseOrder({ deliveryDate: curretDate })
     await expect(purcharseOrderValidation.validate(purchaseOrder)).rejects.toThrow(new CustomError('Não é possível fazer pedido para o mesmo dia.'))
   })
 
   it('Should return CustomError if qtdLiters is invalid', async () => {
-    const purchaseOrder = newPurchaseOrder({ qtdLiters: 0 })
+    const curretDate = addDayOnDate(new Date(), 1)
+    const dateFormated = formatDate(curretDate)
+    const purchaseOrder = newPurchaseOrder({ qtdLiters: 0, deliveryDate: dateFormated })
     await expect(purcharseOrderValidation.validate(purchaseOrder)).rejects.toThrow(new CustomError('Quantidade de litros dever ser maior que zero.'))
   })
 
