@@ -13,6 +13,9 @@ let findFuelStationRepository: MockProxy<FindFuelStationByIdRepository>
 let getConfigRepository: MockProxy<GetConfigRepository>
 let purcharseOrderValidation: PurcharseOrderValidations
 
+const curretDate = addDayOnDate(new Date(), 1)
+const dateFormated = formatDate(curretDate)
+
 describe('PurchaseOrderValidation - Unit test', () => {
   beforeAll(() => {
     jest.clearAllMocks()
@@ -55,12 +58,10 @@ describe('PurchaseOrderValidation - Unit test', () => {
   it('Should return CustomError if delivery date is invalid', async () => {
     const curretDate = formatDate(new Date())
     const purchaseOrder = newPurchaseOrder({ deliveryDate: curretDate })
-    await expect(purcharseOrderValidation.validate(purchaseOrder)).rejects.toThrow(new CustomError('Não é possível fazer pedido para o mesmo dia.'))
+    await expect(purcharseOrderValidation.validate(purchaseOrder)).rejects.toThrow(new CustomError('Não é possível fazer pedido para uma data anterior ou igual a atual.'))
   })
 
   it('Should return CustomError if qtdLiters is invalid', async () => {
-    const curretDate = addDayOnDate(new Date(), 1)
-    const dateFormated = formatDate(curretDate)
     const purchaseOrder = newPurchaseOrder({ qtdLiters: 0, deliveryDate: dateFormated })
     await expect(purcharseOrderValidation.validate(purchaseOrder)).rejects.toThrow(new CustomError('Quantidade de litros dever ser maior que zero.'))
   })
@@ -95,7 +96,7 @@ describe('PurchaseOrderValidation Fuel Station peding - Unit test', () => {
   })
 
   it('Should return CustomError if fuel station is not approved', async () => {
-    const purchaseOrder = newPurchaseOrder()
+    const purchaseOrder = newPurchaseOrder({ deliveryDate: dateFormated })
     await expect(purcharseOrderValidation.validate(purchaseOrder)).rejects.toThrow(new CustomError('Cadastro pendente de aprovação.'))
   })
 })
@@ -121,7 +122,7 @@ describe('PurchaseOrderValidation Invalid Time Limit - Unit test', () => {
     )
   })
   it('Should return CustomError if time limit is invalid', async () => {
-    const purchaseOrder = newPurchaseOrder()
+    const purchaseOrder = newPurchaseOrder({ deliveryDate: dateFormated })
     await expect(purcharseOrderValidation.validate(purchaseOrder)).rejects.toThrow(new CustomError('Horario não permitido para realização do pedido.'))
   })
 })

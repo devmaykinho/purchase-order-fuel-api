@@ -33,8 +33,8 @@ describe('FindActiveCustomPrice - Unit test', () => {
     expect(fuelStationResponse).toBeTruthy()
   })
 
-  it('Should return undefined if does not exists custom price for fuelStationId', async () => {
+  it('Should return an empty list if does not exists custom price for fuelStationId', async () => {
     const fuelStationResponse = await findActiveCustomPriceRepository.run(customPrice.fuelStationId)
-    expect(fuelStationResponse).toBeFalsy()
+    expect(fuelStationResponse).toEqual([])
   })
 })

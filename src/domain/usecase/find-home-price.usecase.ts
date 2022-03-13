@@ -19,21 +19,21 @@ export class FindHomePriceUseCase implements FindHomePrice {
     if (customPrice) {
       customPrice.forEach((price) => {
         pricesType.push(price.fuelType)
-        homePrice.push(price)
+        homePrice.push(this.map(price))
       })
     }
 
     if (!pricesType.includes('ETANOL')) {
       const supplierPrice = await this.getSupllierPriceByFuelType('ETANOL')
       if (supplierPrice) {
-        homePrice.push(supplierPrice)
+        homePrice.push(this.map(supplierPrice))
       }
     }
 
     if (!pricesType.includes('GASOLINA')) {
       const supplierPrice = await this.getSupllierPriceByFuelType('GASOLINA')
       if (supplierPrice) {
-        homePrice.push(supplierPrice)
+        homePrice.push(this.map(supplierPrice))
       }
     }
 
@@ -51,9 +51,16 @@ export class FindHomePriceUseCase implements FindHomePrice {
       return {
         deliveryType: supplierPrice.deliveryType,
         fuelType: supplierPrice.fuelType,
-        paymentType: supplierPrice.deliveryType,
+        paymentType: supplierPrice.paymentType,
         price: supplierPrice.salesPrice
       }
     }
   }
+
+  map = (prices: any): HomePriceResponse => ({
+    fuelType: prices.fuelType,
+    deliveryType: prices.deliveryType,
+    paymentType: prices.paymentType,
+    price: prices.price ?? prices.salesPrice
+  })
 }

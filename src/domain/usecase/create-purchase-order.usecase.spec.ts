@@ -1,11 +1,11 @@
 import { MockProxy, mock } from 'jest-mock-extended'
-import { CreatePurchaseOrderRepository, Validation, CreatePurchaseOrder } from '../interface'
+import { CreatePurchaseOrderRepository, CreatePurchaseOrder, PurcharseOrderValidations } from '../interface'
 import { CreatePurchaseOrderUseCase } from './create-purchase-order.usecase'
 import { newPurchaseOrder } from '../../utils/fixtures'
 
 const purchaseOrder = newPurchaseOrder()
 describe('CreatePurchaseOrderUseCase - Unit test', () => {
-  let purchaseOrderValidation: MockProxy<Validation>
+  let purchaseOrderValidation: MockProxy<PurcharseOrderValidations>
   let createPurchaseOrderRepository: MockProxy<CreatePurchaseOrderRepository>
   let createPurchaseOrderUseCase: CreatePurchaseOrder
 

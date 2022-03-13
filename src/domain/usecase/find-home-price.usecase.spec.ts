@@ -1,12 +1,10 @@
 import { mock, MockProxy } from 'jest-mock-extended'
-import { FindActiveCustomPriceRepository, FindSupplierPricesByFilterRepository, FindHomePrice, FindSupplierPricesFilter, Validation } from '../interface'
+import { FindActiveCustomPriceRepository, FindSupplierPricesByFilterRepository, FindHomePrice, Validation } from '../interface'
 import { FindHomePriceUseCase } from './find-home-price.usecase'
-import { newCustomPrice, newSupplierPrices } from '../../utils/fixtures'
-import { HomePriceResponse, SupplierPricesResponse } from '../response'
+import { newCustomPriceResponse } from '../../utils/fixtures'
+import { HomePriceResponse } from '../response'
 
-const customPrice = newCustomPrice({ price: 10.00 })
-const suplierPrice = newSupplierPrices()
-const supplierPriceResponse: SupplierPricesResponse = { id: 1, ...suplierPrice }
+const customPrice = newCustomPriceResponse({ price: 10.00 })
 
 describe('FindHomePriceUsecase - Unit test', () => {
   let findActiveCustomPriceRepository: MockProxy<FindActiveCustomPriceRepository>
@@ -40,32 +38,10 @@ describe('FindHomePriceUsecase - Unit test', () => {
       price: customPrice.price
     }
 
-    findActiveCustomPriceRepository.run.mockImplementation(async () => { return Promise.resolve(customPrice) })
+    findActiveCustomPriceRepository.run.mockImplementation(async () => { return Promise.resolve([customPrice]) })
     const result = await findHomePriceUsecase.run(fuelStationId)
 
     expect(findActiveCustomPriceRepository.run).toHaveBeenCalledWith(fuelStationId)
-    expect(result).toEqual(homePrice)
-  })
-
-  it('Should return a suplier price ANTECIPADO', async () => {
-    const homePrice: HomePriceResponse = {
-      fuelType: suplierPrice.fuelType,
-      paymentType: suplierPrice.paymentType,
-      deliveryType: suplierPrice.deliveryType,
-      price: suplierPrice.salesPrice
-    }
-
-    findActiveCustomPriceRepository.run.mockImplementation(async () => { return Promise.resolve(undefined) })
-    findSupplierPriceByFilter.run.mockImplementation(async () => { return Promise.resolve(supplierPriceResponse) })
-
-    const result = await findHomePriceUsecase.run(fuelStationId)
-    const supplierPriceFilter: FindSupplierPricesFilter = {
-      fuelType: 'ETANOL',
-      paymentType: 'ANTECIPADO',
-      deliveryType: 'RETIRADA'
-    }
-
-    expect(findSupplierPriceByFilter.run).toHaveBeenCalledWith(supplierPriceFilter)
-    expect(result).toEqual(homePrice)
+    expect(result).toEqual([homePrice])
   })
 })
