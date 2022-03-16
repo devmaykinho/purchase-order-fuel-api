@@ -1,7 +1,3 @@
--- Table: public.fuel_station
-
--- DROP TABLE public.fuel_station;
-
 CREATE TABLE IF NOT EXISTS public.fuel_station
 (
     id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
@@ -24,6 +20,3 @@ CREATE TABLE IF NOT EXISTS public.fuel_station
 )
 
 TABLESPACE pg_default;
-
-ALTER TABLE public.fuel_station
-    OWNER to mmuqlxlfswenwg;

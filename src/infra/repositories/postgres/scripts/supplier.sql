@@ -1,7 +1,3 @@
--- Table: public.supplier
-
--- DROP TABLE public.supplier;
-
 CREATE TABLE IF NOT EXISTS public.supplier
 (
     id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
@@ -19,6 +15,3 @@ CREATE TABLE IF NOT EXISTS public.supplier
 )
 
 TABLESPACE pg_default;
-
-ALTER TABLE public.supplier
-    OWNER to mmuqlxlfswenwg;
