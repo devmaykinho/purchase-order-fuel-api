@@ -5,11 +5,11 @@ dotenv.config()
 
 export const config: ConnectionOptions = {
   type: 'postgres',
-  host: 'ec2-3-230-149-158.compute-1.amazonaws.com',
+  host: 'ec2-54-208-139-247.compute-1.amazonaws.com',
   port: 5432,
-  database: 'd4qs4766vh59t7',
-  username: 'mmuqlxlfswenwg',
-  password: '2b3903c1cd28b111aebc7598c016340418631e6d6a75a50127343d1789eaab18',
+  database: 'd3heab1fhft3m9',
+  username: 'fycpoikxfhhjdr',
+  password: '88e9e41d7e474002b73077156709c5976d4afe98acd157b625e8afc4092badfa',
   ssl: true,
   extra: {
     ssl: {

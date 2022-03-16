@@ -12,6 +12,3 @@ CREATE TABLE IF NOT EXISTS public.custom_price
 )
 
 TABLESPACE pg_default;
-
-ALTER TABLE public.custom_price
-    OWNER to mmuqlxlfswenwg;
