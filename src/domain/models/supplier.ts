@@ -4,11 +4,11 @@ export interface SupplierModel {
   name: string
   cnpj: string
   email: string
-  telephone: string
+  phoneNumber: string
+  address: string
   city: string
-  district: string
-  street: string
-  supplierNumber: string
+  uf: string
   cep: string
   isActive: IsActive
+  observation: string
 }

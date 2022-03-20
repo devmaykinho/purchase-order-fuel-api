@@ -4,13 +4,13 @@ CREATE TABLE IF NOT EXISTS public.supplier
     name character varying COLLATE pg_catalog."default" NOT NULL,
     cnpj character varying COLLATE pg_catalog."default" NOT NULL,
     email character varying COLLATE pg_catalog."default" NOT NULL,
-    telephone character varying COLLATE pg_catalog."default" NOT NULL,
+    phone_number character varying COLLATE pg_catalog."default" NOT NULL,
+    addres character varying COLLATE pg_catalog."default" NOT NULL,
     city character varying COLLATE pg_catalog."default" NOT NULL,
-    district character varying COLLATE pg_catalog."default" NOT NULL,
-    street character varying COLLATE pg_catalog."default" NOT NULL,
+    uf character varying COLLATE pg_catalog."default" NOT NULL,
     cep character varying COLLATE pg_catalog."default" NOT NULL,
     is_active character varying COLLATE pg_catalog."default" NOT NULL,
-    supplier_number character varying COLLATE pg_catalog."default" NOT NULL,
+    observation character varying COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT supplier_pkey PRIMARY KEY (id)
 )
 

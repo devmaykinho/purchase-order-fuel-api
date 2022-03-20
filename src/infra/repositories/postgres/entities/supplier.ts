@@ -14,24 +14,24 @@ export class SupplierEntity {
   @Column()
   email: string
 
+  @Column({ name: 'phone_number' })
+  phoneNumber: string
+
   @Column()
-  telephone: string
+  address: string
 
   @Column()
   city: string
 
   @Column()
-  district: string
-
-  @Column()
-  street: string
-
-  @Column({ name: 'supplier_number' })
-  supplierNumber: string
+  uf: string
 
   @Column()
   cep: string
 
   @Column({ name: 'is_active' })
   isActive: string
+
+  @Column()
+  observation: string
 }

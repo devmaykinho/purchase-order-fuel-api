@@ -9,6 +9,11 @@ CREATE TABLE IF NOT EXISTS public.purchase_order
     status character varying COLLATE pg_catalog."default" NOT NULL,
     fuel_station_id integer NOT NULL,
     delivery_date character varying COLLATE pg_catalog."default" NOT NULL,
+    shipping_name character varying COLLATE pg_catalog."default",
+    shipping_cnpj character varying COLLATE pg_catalog."default",
+    shipping_plate_number character varying COLLATE pg_catalog."default",
+    shipping_driver_name character varying COLLATE pg_catalog."default",
+    shipping_driver_cnh character varying COLLATE pg_catalog."default",
     create_date character varying COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT purchase_order_pkey PRIMARY KEY (id)
 )

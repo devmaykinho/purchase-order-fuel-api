@@ -29,6 +29,21 @@ export class PurchaseOrderEntity {
   @Column({ name: 'delivery_date', type: 'date' })
   deliveryDate: string
 
+  @Column({ name: 'shipping_name' })
+  shippingName?: string
+
+  @Column({ name: 'shipping_cnpj' })
+  shippingCnpj?: string
+
+  @Column({ name: 'shipping_plate_number' })
+  shippingPlateNumber?: string
+
+  @Column({ name: 'shipping_driver_name' })
+  shippingDriverName?: string
+
+  @Column({ name: 'shipping_driver_cnh' })
+  shippingDriverCnh?: string
+
   @Column({ name: 'create_date', type: 'date' })
   createDate: string
 }

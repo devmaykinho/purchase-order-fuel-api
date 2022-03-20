@@ -9,4 +9,9 @@ export interface PurchaseOrderResponse {
   deliveryDate: string
   createDate: string
   fuelStationId: Number
+  shippingName?: string
+  shippingCnpj?: string
+  shippingPlateNumber?: string
+  shippingDriverName?: string
+  shippingDriverCnh?: string
 }

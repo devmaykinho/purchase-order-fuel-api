@@ -5,12 +5,12 @@ export const makeSupplierValidationFactory = (): ValidationComposite => {
     'name',
     'cnpj',
     'email',
-    'telephone',
+    'phoneNumber',
+    'address',
     'city',
-    'district',
-    'street',
-    'supplierNumber',
-    'cep'
+    'uf',
+    'cep',
+    'observation'
   ]
 
   const validations = [

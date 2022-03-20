@@ -11,6 +11,6 @@ export class CreateSupplierUseCase implements CreateSupplier {
   run = async (supplier: SupplierModel): Promise<void> => {
     this.requiredFieldsValidation.validate(supplier)
 
-    await this.createSupplierRepository.run(supplier)
+    await this.createSupplierRepository.run({ ...supplier, isActive: 'SIM' })
   }
 }
