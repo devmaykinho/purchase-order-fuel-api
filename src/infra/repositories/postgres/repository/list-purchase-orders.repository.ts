@@ -7,7 +7,7 @@ export class ListPurchaseOrdersRepositoryPg implements ListPurchaseOrderReposito
   run = async (): Promise<PurchaseOrderResponse[] | undefined> => {
     try {
       const purchaseOrderEntity = getRepository(PurchaseOrderEntity)
-      return await purchaseOrderEntity.find()
+      return await purchaseOrderEntity.find({ order: { id: 'ASC' } })
     } catch (error) {
       console.error('ListPurchaseOrdersRepositoryPg:::', error)
       throw new Error('Error ao obter os pedidos de compra')
