@@ -7,7 +7,7 @@ export const fuelStationMapper = (fuelStationEntity: FuelStationEntity | undefin
   }
 
   return {
-    id: fuelStationEntity.id.toString(),
+    id: fuelStationEntity.id,
     name: fuelStationEntity.name,
     cnpj: fuelStationEntity.cnpj,
     email: fuelStationEntity.email,

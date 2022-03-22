@@ -1,5 +1,5 @@
 export interface FuelStationResponse {
-  id: string
+  id: number
   name: string
   cnpj: string
   email: string

@@ -2,7 +2,7 @@ import { FuelStationStatus, IsNetwork } from '../../domain/models'
 import { FuelStationResponse } from '../../domain/response'
 
 interface FuelStationResponseFixtureProps {
-  id?: string
+  id?: number
   name?: string
   cnpj?: string
   email?: string
@@ -24,7 +24,7 @@ export const newFuelStationResponse = (props?: FuelStationResponseFixtureProps):
   const isNetwork = props?.isNetwork ?? 'SIM'
 
   return {
-    id: props?.name ?? '1',
+    id: Number(props?.name) ?? 1,
     name: props?.name ?? 'any_name',
     cnpj: props?.cnpj ?? 'any_cnpj',
     email: props?.email ?? 'any_email',
