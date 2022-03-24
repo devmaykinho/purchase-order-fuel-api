@@ -1,10 +1,10 @@
 import { DuplicateRecordError } from '../../utils/error'
-import { FindSupplierPricesBySupplierIdRepository, ValidationDuplicateRecord } from '../interface'
+import { FindSupplierPricesByFilterRepository, ValidationDuplicateRecord } from '../interface'
 
 export class DuplicateSupplierPriceValidation implements ValidationDuplicateRecord {
-  constructor (private readonly findSupplierPricesBySupplierIdRepository: FindSupplierPricesBySupplierIdRepository) {}
+  constructor (private readonly findSupplierPricesByFilterRepository: FindSupplierPricesByFilterRepository) {}
   validate = async (input: any): Promise<void> => {
-    const exisSupplierPrice = await this.findSupplierPricesBySupplierIdRepository.run(input)
+    const exisSupplierPrice = await this.findSupplierPricesByFilterRepository.run(input)
     if (exisSupplierPrice) {
       throw new DuplicateRecordError('supplierId')
     }

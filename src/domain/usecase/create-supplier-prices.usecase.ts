@@ -11,7 +11,7 @@ export class CreateSupplierPricesUseCase implements CreateSupplierPrices {
 
   run = async (supplierPrices: SupplierPricesModel): Promise<void> => {
     this.requiredFieldsValidation.validate(supplierPrices)
-    await this.duplicateRecordValidation.validate(supplierPrices.supplierId)
+    await this.duplicateRecordValidation.validate(supplierPrices)
     await this.createSupplierPricesRepository.run(supplierPrices)
   }
 }
