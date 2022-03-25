@@ -5,6 +5,7 @@ export interface FindSupplierPricesFilter {
   fuelType: FuelType
   paymentType: PaymentType
   deliveryType: DeliveryType
+  supplierId?: number
 }
 
 export interface FindSupplierPricesByFilterRepository {

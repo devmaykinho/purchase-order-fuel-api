@@ -59,7 +59,7 @@ export class PurcharseOrderValidation implements Validation {
   }
 
   validateDeliveryType = (type: DeliveryType): void => {
-    const types: DeliveryType[] = ['COLACADO', 'RETIRADA']
+    const types: DeliveryType[] = ['COLOCADO', 'RETIRADA']
     if (!types.includes(type)) {
       throw new CustomError('Tipo de entrega não permitido.')
     }

@@ -2,7 +2,10 @@ import { HttpResponseModel } from '../interfaces/controller'
 
 export const badRequest = (error: any): HttpResponseModel => ({
   statusCode: error.code,
-  body: error.message
+  body: {
+    message: error.message,
+    name: error.name
+  }
 })
 
 export const serverError = (): HttpResponseModel => ({
