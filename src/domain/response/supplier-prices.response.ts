@@ -1,6 +1,6 @@
 
 export interface SupplierPricesResponse {
-  id: Number
+  id: number
   fuelType: string
   paymentType: string
   deliveryType: string

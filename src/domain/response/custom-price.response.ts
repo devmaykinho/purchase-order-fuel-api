@@ -1,4 +1,5 @@
 export interface CustomPriceResponse {
+  id: number
   fuelType: string
   paymentType: string
   deliveryType: string

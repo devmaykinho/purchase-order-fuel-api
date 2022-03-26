@@ -7,6 +7,7 @@ export const customPricesMapper = (customPriceEntity: CustomPriceEntity | undefi
   }
 
   return {
+    id: customPriceEntity.id,
     fuelType: customPriceEntity.fuelType,
     paymentType: customPriceEntity.paymentType,
     deliveryType: customPriceEntity.deliveryType,

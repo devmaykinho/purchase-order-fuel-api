@@ -4,6 +4,7 @@ import { DeliveryType, PaymentType, FuelType } from '../../domain/models'
 import { CustomPriceResponse } from '../../domain/response'
 
 interface CustomPriceFixtureProps {
+  id: number
   fuelType?: FuelType
   paymentType?: PaymentType
   deliveryType?: DeliveryType
@@ -14,6 +15,7 @@ interface CustomPriceFixtureProps {
 }
 
 export const newCustomPriceResponse = (props?: CustomPriceFixtureProps): CustomPriceResponse => ({
+  id: props?.id ?? 1,
   fuelType: props?.fuelType ?? 'GASOLINA',
   paymentType: props?.paymentType ?? 'ANTECIPADO',
   deliveryType: props?.deliveryType ?? 'RETIRADA',
