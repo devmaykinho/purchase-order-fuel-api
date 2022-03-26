@@ -19,7 +19,7 @@ export class FindActiveCustomPriceByFilterRepositoryPg implements FindActiveCust
         }
       })
     } catch (error) {
-      console.error('FindActiveCustomPriceRepositoryPg:::', error)
+      console.error('FindActiveCustomPriceByFilterRepositoryPg:::', error)
       throw new Error('Erro ao pesquisar um preço ativo')
     }
   }

@@ -1,8 +1,8 @@
 import { DuplicateRecordError } from '../../utils/error'
-import { FindActiveCustomPriceRepository, ValidationDuplicateRecord } from '../interface'
+import { FindActiveCustomPriceByfilterRepository, ValidationDuplicateRecord } from '../interface'
 
 export class DuplicateCustomPriceValidation implements ValidationDuplicateRecord {
-  constructor (private readonly findActiveCustomPriceRepository: FindActiveCustomPriceRepository) {}
+  constructor (private readonly findActiveCustomPriceRepository: FindActiveCustomPriceByfilterRepository) {}
   validate = async (input: any): Promise<void> => {
     const existCustomPrice = await this.findActiveCustomPriceRepository.run(input)
     if (existCustomPrice) {

@@ -5,7 +5,7 @@ import { CustomPriceResponse } from '../../../../domain/response'
 import { CustomPriceEntity } from '../entities'
 
 export class FindActiveCustomPriceRepositoryPg implements FindActiveCustomPriceRepository {
-  run = async (fuelStationId: Number): Promise<CustomPriceResponse[] | undefined> => {
+  run = async (fuelStationId: number): Promise<CustomPriceResponse[] | undefined> => {
     try {
       const currentDate = new Date()
       const dateFormated = moment(currentDate).format('YYYY-MM-DD')

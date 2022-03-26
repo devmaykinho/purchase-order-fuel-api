@@ -5,9 +5,9 @@ interface CustomPriceFixtureProps {
   fuelType?: FuelType
   paymentType?: PaymentType
   deliveryType?: DeliveryType
-  price?: Number
+  price?: number
   isActive?: 'SIM' | 'NÃO'
-  fuelStationId?: Number
+  fuelStationId?: number
   createDate?: string
 }
 

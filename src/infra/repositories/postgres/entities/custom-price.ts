@@ -15,13 +15,13 @@ export class CustomPriceEntity {
   deliveryType: string
 
   @Column()
-  price: Number
+  price: number
 
   @Column({ name: 'is_active' })
   isActive: string
 
   @Column({ name: 'fuel_station_id' })
-  fuelStationId: Number
+  fuelStationId: number
 
   @Column({ name: 'create_date', type: 'date' })
   createDate: string

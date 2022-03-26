@@ -5,8 +5,8 @@ export interface CustomPriceModel {
   fuelType: FuelType
   paymentType: PaymentType
   deliveryType: DeliveryType
-  price: Number
+  price: number
   isActive?: IsActive
-  fuelStationId: Number
+  fuelStationId: number
   createDate: string
 }
