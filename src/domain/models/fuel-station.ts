@@ -2,6 +2,7 @@ export type FuelStationStatus = 'PEDING' | 'ACTIVE' | 'BLOCKED'
 export type IsNetwork = 'SIM' | 'NÃO'
 
 export interface FuelStation {
+  id?: number
   name: string
   cnpj: string
   email: string

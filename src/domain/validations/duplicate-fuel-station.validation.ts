@@ -5,7 +5,7 @@ export class DuplicateFuelStationValidation implements ValidationDuplicateRecord
   constructor (private readonly findFuelStationByEmailOrCnpjRepository: FindFuelStationByEmailOrCnpjRepository) {}
   validate = async (input: any): Promise<void> => {
     const existFuelStation = await this.findFuelStationByEmailOrCnpjRepository.run(input)
-    if (existFuelStation) {
+    if (existFuelStation && existFuelStation.id !== input.id) {
       throw new DuplicateRecordError('cnpj')
     }
   }

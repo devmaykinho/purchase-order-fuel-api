@@ -1,6 +1,7 @@
 import { IsActive } from '../interface/types'
 
 export interface SupplierModel {
+  id?: number
   name: string
   cnpj: string
   email: string

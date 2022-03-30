@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS public.user_adm
     email character varying COLLATE pg_catalog."default" NOT NULL,
     phone_number character varying COLLATE pg_catalog."default" NOT NULL,
     is_active character varying COLLATE pg_catalog."default" NOT NULL,
+    password character varying COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT user_adm_pkey PRIMARY KEY (id)
 )
 

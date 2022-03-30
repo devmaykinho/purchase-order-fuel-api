@@ -7,13 +7,15 @@ import {
   makeListSupplierPricesController,
   makeUpdateSupplierPricesController,
   makeDeleteSupplierPricesController,
-  makeDeleteSupplierController
+  makeDeleteSupplierController,
+  makeUpdateSupplierController
 } from '../factories'
 import { adaptRouter } from '../adapters/express/express-route-adapter'
 
 export default (router: Router): void => {
   router.post('/supplier', adaptRouter(makeSupplierController()))
   router.get('/supplier', adaptRouter(makeListSuppliersController()))
+  router.put('/supplier', adaptRouter(makeUpdateSupplierController()))
   router.delete('/supplier/:supplierId', adaptRouter(makeDeleteSupplierController()))
   router.post('/supplier-prices/home', adaptRouter(makeFindHomePriceController()))
   router.post('/supplier-prices', adaptRouter(makeSupplierPricesController()))

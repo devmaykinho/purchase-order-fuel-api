@@ -5,7 +5,7 @@ export class DuplicateCustomPriceValidation implements ValidationDuplicateRecord
   constructor (private readonly findActiveCustomPriceRepository: FindActiveCustomPriceByfilterRepository) {}
   validate = async (input: any): Promise<void> => {
     const existCustomPrice = await this.findActiveCustomPriceRepository.run(input)
-    if (existCustomPrice) {
+    if (existCustomPrice && existCustomPrice.id !== input.id) {
       throw new DuplicateRecordError('fuelStationId')
     }
   }
