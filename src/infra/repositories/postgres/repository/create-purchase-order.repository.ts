@@ -9,8 +9,12 @@ export class CreatePurchaseOrderRepositoryPg implements CreatePurchaseOrderRepos
     try {
       const currentDate = new Date()
       const dateFormated = moment(currentDate).format('YYYY-MM-DD')
-      const supplierEntity = getRepository(PurchaseOrderEntity)
-      await supplierEntity.save({ ...purchaseOrder, createDate: dateFormated })
+      const orderEntity = getRepository(PurchaseOrderEntity)
+      const order: PurchaseOrderModel = {
+        ...purchaseOrder,
+        ...purchaseOrder.shippingCompany
+      }
+      await orderEntity.save({ ...order, createDate: dateFormated })
     } catch (error) {
       console.error('CreatePurchaseOrderRepositoryPg:::', error)
       throw new Error('Erro ao criar o pedido de compra')

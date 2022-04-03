@@ -18,11 +18,11 @@ export const makeCreatePurchaseOrderValidationFactory = (): PurcharseOrderValida
   ]
 
   const shippingCompanyRequiredFields = [
-    'name',
-    'cnpj',
-    'plateNumber',
-    'driverName',
-    'cnh'
+    'shippingDriverCnh',
+    'shippingCnpj',
+    'shippingDriverName',
+    'shippingName',
+    'shippingPlateNumber'
   ]
 
   return new PurcharseOrderValidation(
