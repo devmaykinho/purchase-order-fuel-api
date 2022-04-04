@@ -1,17 +1,15 @@
+import { ShippingCompanyModel } from '../models'
+
 export interface PurchaseOrderResponse {
   id: number
   fuelType: string
   paymentType: string
   deliveryType: string
-  totalPrice: Number
+  totalPrice: number
   status: String
-  qtdLiters: Number
+  qtdLiters: number
   deliveryDate: string
   createDate: string
-  fuelStationId: Number
-  shippingName?: string
-  shippingCnpj?: string
-  shippingPlateNumber?: string
-  shippingDriverName?: string
-  shippingDriverCnh?: string
+  fuelStationId: number
+  shippingCompany?: ShippingCompanyModel
 }

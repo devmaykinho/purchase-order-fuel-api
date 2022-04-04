@@ -1,4 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm'
+import { PurchaseOrderStatus } from '../../../../domain/interface/types'
+import { DeliveryType, FuelType, PaymentType } from '../../../../domain/models'
 
 @Entity({ name: 'purchase_order' })
 export class PurchaseOrderEntity {
@@ -6,25 +8,25 @@ export class PurchaseOrderEntity {
   id: number
 
   @Column({ name: 'fuel_type' })
-  fuelType: string
+  fuelType: FuelType
 
   @Column({ name: 'payment_type' })
-  paymentType: string
+  paymentType: PaymentType
 
   @Column({ name: 'delivery_type' })
-  deliveryType: string
+  deliveryType: DeliveryType
 
   @Column({ name: 'qtd_liters' })
-  qtdLiters: Number
+  qtdLiters: number
 
   @Column({ name: 'total_price' })
-  totalPrice: Number
+  totalPrice: number
 
   @Column()
-  status: string
+  status: PurchaseOrderStatus
 
   @Column({ name: 'fuel_station_id' })
-  fuelStationId: Number
+  fuelStationId: number
 
   @Column({ name: 'delivery_date', type: 'date' })
   deliveryDate: string

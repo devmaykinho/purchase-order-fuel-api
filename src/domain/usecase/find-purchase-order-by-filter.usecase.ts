@@ -8,7 +8,7 @@ export class FindPurchaseOrderByFilterUseCase implements FindPurchaseOrderByFilt
     private readonly findPurchaseOrderByFilterRepository: FindPurchaseOrderByFilterRepository
   ) {}
 
-  run = async (fuelStationId: Number): Promise<PurchaseOrderResponse[]> => {
+  run = async (fuelStationId: Number): Promise<PurchaseOrderResponse[] | undefined> => {
     this.requeridFieldValidation.validate(fuelStationId)
     return await this.findPurchaseOrderByFilterRepository.run(fuelStationId)
   }
