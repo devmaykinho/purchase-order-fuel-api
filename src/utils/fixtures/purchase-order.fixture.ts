@@ -16,11 +16,11 @@ interface PurchaseOrderFixtureProps {
 }
 
 const shippingCompany: ShippingCompanyModel = {
-  name: 'Compania',
-  cnh: '01',
-  cnpj: '01',
-  driverName: 'Teste Name',
-  plateNumber: 'CCC1234'
+  shippingName: 'Compania',
+  shippingDriverCnh: '01',
+  shippingCnpj: '01',
+  shippingDriverName: 'Teste Name',
+  shippingPlateNumber: 'CCC1234'
 }
 
 export const newPurchaseOrder = (props?: PurchaseOrderFixtureProps): PurchaseOrderModel => ({

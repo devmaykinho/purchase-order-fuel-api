@@ -1,7 +1,7 @@
 export interface ShippingCompanyModel {
-  name: string
-  cnpj: string
-  plateNumber: string
-  driverName: string
-  cnh: string
+  shippingName: string
+  shippingCnpj: string
+  shippingPlateNumber: string
+  shippingDriverName: string
+  shippingDriverCnh: string
 }
