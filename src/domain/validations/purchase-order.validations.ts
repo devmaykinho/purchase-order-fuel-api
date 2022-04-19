@@ -14,7 +14,9 @@ export class PurcharseOrderValidation implements Validation {
 
   validate = async (purcharseOrder: PurchaseOrderModel): Promise<void> => {
     this.requiredFieldsValidation.validate(purcharseOrder)
-    this.validateShippingCompany(purcharseOrder.shippingCompany)
+    if (purcharseOrder.deliveryType === 'RETIRADA') {
+      this.validateShippingCompany(purcharseOrder.shippingCompany)
+    }
     this.validateFuelType(purcharseOrder.fuelType)
     this.validatePaymentType(purcharseOrder.paymentType)
     this.validateDeliveryType(purcharseOrder.deliveryType)

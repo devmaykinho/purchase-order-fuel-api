@@ -17,7 +17,8 @@ export class ValidationCpf implements ValidateCpf {
   }
 
   hasAllDigitsEqual = (cpf: string): boolean => {
-    return cpf.split('').every(digit => digit === cpf[0])
+    const [firstDigit] = cpf[0]
+    return [...cpf].every(digit => digit === firstDigit)
   }
 
   calculateFirstDigit = (cpf: string): number => {
